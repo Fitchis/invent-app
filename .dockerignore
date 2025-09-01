@@ -10,8 +10,3 @@ Dockerfile
 README.md
 .vscode
 tests
-docs
-*.png
-*.jpg
-*.jpeg
-*.webp
