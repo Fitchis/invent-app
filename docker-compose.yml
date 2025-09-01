@@ -1,0 +1,80 @@
+services:
+    app:
+        build:
+            context: .
+        image: invent-app-php
+        container_name: invent-app-php
+        restart: unless-stopped
+        working_dir: /var/www/html
+        volumes:
+            - ./:/var/www/html
+            - ./vendor:/var/www/html/vendor
+            - ./node_modules:/var/www/html/node_modules
+        depends_on:
+            - db
+        environment:
+            - APP_ENV=local
+            - APP_DEBUG=true
+        networks:
+            - app-network
+    node:
+        image: node:18-alpine
+        container_name: invent-app-node
+        working_dir: /var/www/html
+        volumes:
+            - ./:/var/www/html
+            - /var/www/html/node_modules
+        command: sh -c "npm install --no-audit --no-fund && npm run dev -- --host 0.0.0.0 --port 5173"
+        ports:
+            - "5173:5173"
+        environment:
+            - NODE_ENV=development
+        networks:
+            - app-network
+
+    web:
+        image: nginx:1.26-alpine
+        container_name: invent-app-nginx
+        restart: unless-stopped
+        ports:
+            - "8080:80"
+        volumes:
+            - ./:/var/www/html:ro
+            - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+        depends_on:
+            - app
+        networks:
+            - app-network
+
+    db:
+        image: mysql:8.0
+        container_name: invent-app-mysql
+        restart: unless-stopped
+        environment:
+            MYSQL_ROOT_PASSWORD: secret
+            MYSQL_DATABASE: invent_app
+            MYSQL_USER: laravel
+            MYSQL_PASSWORD: secret
+        ports:
+            - "33060:3306"
+        volumes:
+            - dbdata:/var/lib/mysql
+        networks:
+            - app-network
+
+    mailpit:
+        image: mailhog/mailhog:latest
+        container_name: invent-app-mailpit
+        restart: unless-stopped
+        ports:
+            - "1025:1025"
+            - "8025:8025"
+        networks:
+            - app-network
+
+volumes:
+    dbdata:
+
+networks:
+    app-network:
+        driver: bridge

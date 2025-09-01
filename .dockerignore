@@ -1,0 +1,12 @@
+vendor
+node_modules
+.git
+.github
+.env
+storage/*.key
+storage/*.log
+docker-compose.yml
+Dockerfile
+README.md
+.vscode
+tests

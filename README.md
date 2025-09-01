@@ -92,8 +92,5 @@ docker-compose up -d node
 
 ## Screenshot
 
-Below is a screenshot of the running application (place `screenshot.png` in the `docs/` folder to display here):
-
 ![Invent App screenshot](docs/screenshot.png)
-
-If you don't have the image in the repository yet, create a `docs` folder and add `screenshot.png` (recommended size ~1200x400). After adding, the image will render above.
+![Invent App screenshot](docs/dashboard.png)
