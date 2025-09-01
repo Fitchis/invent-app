@@ -47,8 +47,8 @@ docker-compose exec app php artisan migrate --seed
 ### Dummy credentials (for testing)
 
 -   Admin / tester user (created by seeder):
-	- Email: `test@example.com`
-	- Password: `password`
+    -   Email: `test@example.com`
+    -   Password: `password`
 
 Use the above credentials to sign in during local development. If the user is not present, run:
 
@@ -89,3 +89,11 @@ docker-compose up -d node
 ```
 
 -   Vite will be available on http://localhost:5173 and Blade templates will load assets from the dev server automatically during development.
+
+## Screenshot
+
+Below is a screenshot of the running application (place `screenshot.png` in the `docs/` folder to display here):
+
+![Invent App screenshot](docs/screenshot.png)
+
+If you don't have the image in the repository yet, create a `docs` folder and add `screenshot.png` (recommended size ~1200x400). After adding, the image will render above.
