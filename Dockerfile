@@ -24,13 +24,11 @@ WORKDIR /var/www/html
 COPY composer.json composer.lock ./
 RUN composer install --no-dev --prefer-dist --no-progress --no-interaction || true
 
-# Note: we do not COPY the full repository into the image to avoid
-# potential platform/file-mode issues when creating the build context.
-# The application code is mounted at runtime via docker-compose volumes.
-## COPY . .
+# Copy the rest of the application
+COPY . .
 
-## Ensure storage directories exist (will be owned inside container at runtime)
-## RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache || true
+# Ensure storage directories exist
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache || true
 
 EXPOSE 9000
 
